@@ -2,14 +2,8 @@
 import csv
 import random
 import psycopg2
-import os
 
-from config import ROOT
-
-PASSWORD = os.getenv('PSQL_PASSWORD')
-CUSTOMERS = os.path.join(ROOT, 'homework-1', 'north_data', 'customers_data.csv')
-EMPLOYEES = os.path.join(ROOT, 'homework-1', 'north_data', 'employees_data.csv')
-ORDER_DATA = os.path.join(ROOT, 'homework-1', 'north_data', 'orders_data.csv')
+from config import PASSWORD, ORDER_DATA, CUSTOMERS, EMPLOYEES
 
 with psycopg2.connect(database='north', user='postgres', password=PASSWORD) as connection:
     with connection.cursor() as cursor:
