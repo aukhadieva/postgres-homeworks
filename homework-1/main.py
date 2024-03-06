@@ -27,26 +27,36 @@ def execute_connection(row_list: list) -> None:
     with psycopg2.connect(database='north', user='postgres', password=PASSWORD) as connection:
         with connection.cursor() as cursor:
 
-            counter_id = 0
-            counter_city = 0
+            try:
+                counter_id = 0
+                for item in row_list:
+                    counter_id = counter_id + 1
+                    cursor.execute('INSERT INTO orders VALUES (%s, %s, %s)',
+                                   (counter_id, item['order_date'], item['ship_city']))
+            except KeyError:
+                pass
 
-            for item in row_list:
-                counter_id = counter_id + 1
-                cursor.execute('INSERT INTO orders VALUES (%s, %s, %s)',
-                               (counter_id, item['order_date'], item['ship_city']))
+            try:
+                counter_id = 0
+                for item in row_list:
+                    counter_id = counter_id + 1
+                    cursor.execute('INSERT INTO customers VALUES (%s, %s, %s)',
+                                   (counter_id, item['company_name'], item['contact_name']))
+            except KeyError:
+                pass
 
-            for row in row_list:
-                counter_id = counter_id + 1
-                cursor.execute('INSERT INTO customers VALUES (%s, %s, %s)',
-                               (counter_id, row['company_name'], row['contact_name']))
-
-            for row in row_list:
-                counter_id = counter_id + 1
-                counter_city = counter_city + random.randint(1, 10)
-                counter_employer_name = random.randint(1, 9)
-                cursor.execute('INSERT INTO employees VALUES (%s, %s, %s, %s, %s, %s)',
-                               (counter_id, row['first_name'], row['last_name'], row['notes'],
-                                counter_city, counter_employer_name))
+            try:
+                counter_id = 0
+                counter_city = 0
+                for row in row_list:
+                    counter_id = counter_id + 1
+                    counter_city = counter_city + random.randint(1, 10)
+                    counter_employer_name = random.randint(1, 9)
+                    cursor.execute('INSERT INTO employees VALUES (%s, %s, %s, %s, %s, %s)',
+                                   (counter_id, row['first_name'], row['last_name'], row['notes'],
+                                    counter_city, counter_employer_name))
+            except KeyError:
+                pass
 
     connection.close()
 
