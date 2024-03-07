@@ -30,7 +30,7 @@ def execute_connection(row_list: list) -> None:
             try:
                 counter_id = 0
                 for item in row_list:
-                    counter_id = counter_id + 1
+                    counter_id += 1
                     cursor.execute('INSERT INTO orders VALUES (%s, %s, %s)',
                                    (counter_id, item['order_date'], item['ship_city']))
             except KeyError:
@@ -39,7 +39,7 @@ def execute_connection(row_list: list) -> None:
             try:
                 counter_id = 0
                 for item in row_list:
-                    counter_id = counter_id + 1
+                    counter_id += 1
                     cursor.execute('INSERT INTO customers VALUES (%s, %s, %s)',
                                    (counter_id, item['company_name'], item['contact_name']))
             except KeyError:
@@ -49,7 +49,7 @@ def execute_connection(row_list: list) -> None:
                 counter_id = 0
                 counter_city = 0
                 for row in row_list:
-                    counter_id = counter_id + 1
+                    counter_id += 1
                     counter_city = counter_city + random.randint(1, 10)
                     counter_employer_name = random.randint(1, 9)
                     cursor.execute('INSERT INTO employees VALUES (%s, %s, %s, %s, %s, %s)',
